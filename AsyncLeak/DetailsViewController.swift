@@ -61,19 +61,13 @@ class URLSessionWrapper {
 }
 
 extension URLSessionWrapper {
-    func loadSomething() async throws -> String {
+    func loadSomething() async throws -> Data {
         try await self.urlSession.loadSomething()
     }
 }
 
 extension URLSession {
-    func loadSomething() async throws -> String {
-        let resp = try await self.data(
-            from: URL(string: "https://httpbin.io/delay/3")!
-        )
-
-        let string = String(data: resp.0, encoding: .utf8)!
-
-        return string
+    func loadSomething() async throws -> Data {
+        try await self.data(from: URL(string: "https://httpbin.io/delay/3")!).0
     }
 }
